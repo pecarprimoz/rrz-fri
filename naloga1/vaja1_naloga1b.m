@@ -1,3 +1,6 @@
+#a,b,c,d,e DONE
+
+function naloga_b()
 t=30;
 c=1;
 arr_time=[];
@@ -20,9 +23,9 @@ endwhile
 arr_distances;
 arr_sizes;
 figure;
+subplot(1,2,1);
 plot(arr_time,arr_sizes);
-
-figure;
+subplot(1,2,2);
 plot(arr_distances,arr_sizes);
-
-# TODO, nared 10x na sekundo sample rate, sicer se nebo nic spremenil
+endfunction
+naloga_b

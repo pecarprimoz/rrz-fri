@@ -1,83 +1,119 @@
+function vaja1_naloga_5
+  # a in b u zvezku, za b nimas narjen
+  pkg load image
+  #nal5_c
+  #nal5_d
+  #nal5_e
+  #### DRUGI DEL
+  #nal5_bsecond
+  #nal5_csecond
+  #nal5_dsecond
+  #nal5_tic
+  f
+endfunction
+
+
+
 # c)
-pkg load image
+function nal5_c
 rgs = imread("regions.png");
 # [h,w]=size(rgs);
 test = im2bw(rgs,0.5);
 finished = bwlabel(test);
-#figure;
-#imagesc(finished);
-
+figure;
+imagesc(finished);
+endfunction
 ###
 
-# d)
+# d) FINISH THIS
+function nal5_d
 test=im2bw(imread("regions.png"),0.5);
 test;
 #mom = sum(u)^2 * sum(v)^2;
 #mom
-
+endfunction
 #e)
-  
+
+function nal5_e
 I = imread("regions_noise.png");
 SE=strel('diamond',1);
 testing = bwlabel(imdilate(bwareaopen(I,3),SE));
 print_struct_array_contents(true)
 cents = regionprops(testing,"centroid");
 boxes = regionprops(testing,"BoundingBox");
-#figure;
-#imagesc(testing);
-#hold on;
+figure;
+imagesc(testing);
+hold on;
 #vpras kako se direkt not da box
-#rectangle('Position',[12.5,10.5,25.0,25.0],'EdgeColor','g','LineWidth',3);
-#rectangle('Position',[20.500,49.500,24.000,20.000],'EdgeColor','g','LineWidth',3);
-#rectangle('Position',[57.500,22.500,53.000,34.000],'EdgeColor','g','LineWidth',3);
-#plot(25.269,23.287,'bo','MarkerSize',10);
-#plot(32.500,59.500,'bo','MarkerSize',10);
-#plot(84.212,38.599,'bo','MarkerSize',10);
-
+rectangle('Position',[12.5,10.5,25.0,25.0],'EdgeColor','g','LineWidth',3);
+rectangle('Position',[20.500,49.500,24.000,20.000],'EdgeColor','g','LineWidth',3);
+rectangle('Position',[57.500,22.500,53.000,34.000],'EdgeColor','g','LineWidth',3);
+plot(25.269,23.287,'bo','MarkerSize',10);
+plot(32.500,59.500,'bo','MarkerSize',10);
+plot(84.212,38.599,'bo','MarkerSize',10);
+endfunction
 
 ###
 
 ## spet a) u zvezku
 
 ##b)
-  
+function nal5_bsecond
 I = imread("regions_noise.png");
 bw=bwlabel(im2bw(I,0.5));
 #num_regs=regionprops(bw,'Area')
 #77
-# figure;
-# imagesc(bw);
+ figure;
+ imagesc(bw);
 # opazimo šum, te regije so velike po 1 ali 2 piksla, pogosti pojav v rač. vidu
 # saj ko zajemamo sliko lahko nastane šum zaradi pomankanja svetlobe, premika kamere
-
+endfunction
 #c )
+function nal5_csecond
+I = imread("regions_noise.png");
+bw=bwlabel(im2bw(I,0.5));
 se = ones(3,3);
 A1 = imdilate(bw,se);
 A2 = imerode(A1,se);
 B1 = imerode(bw,se);
 B2 = imdilate(B1,se);
 
-#figure;
-#subplot(2,3,1);
-#imshow(bw);
-#subplot(2,3,2);
-#imshow(A1);
-#subplot(2,3,3);
-#imshow(A2);
+figure;
+subplot(2,3,1);
+imshow(bw);
+subplot(2,3,2);
+imshow(A1);
+subplot(2,3,3);
+imshow(A2);
 
-#subplot(2,3,4);
-#imshow(B1);
-#subplot(2,3,5);
-#imshow(B2);
-
+subplot(2,3,4);
+imshow(B1);
+subplot(2,3,5);
+imshow(B2);
+endfunction
+###
+#d)
+function nal5_dsecond
+serode = strel('diamond',2);
+sedil = ones(2,2);
+img = imread("regions_noise.png");
+figure(1);
+subplot(1,2,1);
+imshow(imerode(imdilate(img,sedil),serode));
+subplot(1,2,2);
+imshow(imopen(imclose(img,serode),sedil));
+endfunction
 ###
 
 
 
-#tic
 
+###
+
+#tic
+function nal5_tic
 yimg = rgb2hsv(imread("bird.jpg"));
-prag = ( yimg(:,:,2) >= 0.06  & yimg(:,:,3)>=0. 2);
+prag = ( yimg(:,:,2) >= 0.06  & yimg(:,:,3)>=0.2);
 SE = strel('diamond',4);
 finished_pic = bwlabel(imdilate(bwareaopen(prag,55),SE));
 figure(3);
@@ -85,7 +121,7 @@ subplot(1,2,1);
 imshow(prag);
 subplot(1,2,2);
 imshow(finished_pic);
-f 
+endfunction
 function f()
 yimg = rgb2hsv(imread("candy.jpg"));
 
@@ -188,8 +224,11 @@ coord_min(1)
 coord_min(2)
 figure(2);
 hold on;
+#if you want correct
+#imshow(together_all);
 
-imshow(together_all);
+#if you want preatty
+imshow(rgbimg);
 #where user clicked
 plot(x,y,'or','MarkerSize',40);
 #where closest is
@@ -200,7 +239,7 @@ if(strcmp(closest_to,'red'))
   text(10,10,"Number of red: ",'Color','red');
   text(10,30,int2str(length(red_vec)/2),'Color','red');
   while(counter<length(red_vec))
-    plot([centRED.Centroid](counter),[centRED.Centroid](counter+1),'ob','MarkerSize',10);
+    plot([centRED.Centroid](counter),[centRED.Centroid](counter+1),'+b','MarkerSize',10);
   counter+=2;
   endwhile
 
@@ -209,7 +248,7 @@ elseif(strcmp(closest_to,'blue'))
 text(10,10,"Number of blue: ",'Color','red');
   text(10,30,int2str(length(blue_vec)/2),'Color','red');
   while(counter<length(blue_vec))
-    plot([centBLUE.Centroid](counter),[centBLUE.Centroid](counter+1),'ob','MarkerSize',10);
+    plot([centBLUE.Centroid](counter),[centBLUE.Centroid](counter+1),'+b','MarkerSize',10);
   counter+=2;
   endwhile
 
@@ -217,24 +256,22 @@ elseif(strcmp(closest_to,'green'))
   text(10,10,"Number of green: ",'Color','red');
   text(10,30,int2str(length(green_vec)/2),'Color','red');
   while(counter<length(green_vec))
-    plot([centGREEN.Centroid](counter),[centGREEN.Centroid](counter+1),'ob','MarkerSize',10);
+    plot([centGREEN.Centroid](counter),[centGREEN.Centroid](counter+1),'+b','MarkerSize',10);
   counter+=2;
   endwhile
 elseif(strcmp(closest_to,'brwn'))
   text(10,10,"Number of brown: ",'Color','red');
   text(10,30,int2str(length(brwn_vec)/2),'Color','red');
   while(counter<length(brwn_vec))
-    plot([centBRWN.Centroid](counter),[centBRWN.Centroid](counter+1),'ob','MarkerSize',10);
+    plot([centBRWN.Centroid](counter),[centBRWN.Centroid](counter+1),'+b','MarkerSize',10);
   counter+=2;
   endwhile
 elseif(strcmp(closest_to,'yellow'))
   text(10,10,"Number of yellow: ",'Color','red');
   text(10,30,int2str(length(yell_vec)/2),'Color','red');
   while(counter<length(yell_vec))
-    plot([centYELL.Centroid](counter),[centYELL.Centroid](counter+1),'ob','MarkerSize',10);
+    plot([centYELL.Centroid](counter),[centYELL.Centroid](counter+1),'+b','MarkerSize',10);
   counter+=2;
   endwhile
 end
 endfunction
-
-#f

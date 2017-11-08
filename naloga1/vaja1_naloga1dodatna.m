@@ -11,6 +11,7 @@
 # Y = 90 mm
 # f = (y.*Z)/Y 
 # f = 777.78
+function naloga_f()
 v_gimpu=[350,280,235,205,178,165]
 arr_distances=[];
 arr_pixels=[];
@@ -27,3 +28,5 @@ arr_distances;
 arr_pixels
 figure;
 plot(arr_distances,arr_pixels,arr_distances,v_gimpu);
+endfunction
+naloga_f
