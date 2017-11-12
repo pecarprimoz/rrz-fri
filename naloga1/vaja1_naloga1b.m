@@ -10,7 +10,7 @@ cur_s=10;
 f=0.01;
 X=2.5;
 car_size=0;
-while(c<t)
+while(c<=t)
   arr_time(end+1) = c;
   arr_distances(end+1) = cur_s;
   car_size=f*(X/cur_s);
@@ -20,7 +20,7 @@ while(c<t)
   c++;
 endwhile
 
-arr_distances;
+arr_distances
 arr_sizes;
 figure;
 subplot(1,2,1);
@@ -28,4 +28,5 @@ plot(arr_time,arr_sizes);
 subplot(1,2,2);
 plot(arr_distances,arr_sizes);
 endfunction
+
 naloga_b

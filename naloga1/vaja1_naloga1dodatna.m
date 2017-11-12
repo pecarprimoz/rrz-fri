@@ -12,6 +12,7 @@
 # f = (y.*Z)/Y 
 # f = 777.78
 function naloga_f()
+napake=[];
 v_gimpu=[350,280,235,205,178,165]
 arr_distances=[];
 arr_pixels=[];
@@ -23,10 +24,13 @@ for i =1:6
   cur_pixels = (f*obj_s)/(distance+(increment*i));
   arr_distances(end+1)=distance+(increment*i);
   arr_pixels(end+1) =cur_pixels;
+  napake(end+1)=abs(cur_pixels-v_gimpu(i));
  endfor
 arr_distances;
 arr_pixels
 figure;
+#naračunano v programu, izmerjeno v gimpu
 plot(arr_distances,arr_pixels,arr_distances,v_gimpu);
+napake
 endfunction
 naloga_f

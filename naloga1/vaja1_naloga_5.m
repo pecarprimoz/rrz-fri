@@ -1,12 +1,20 @@
 function vaja1_naloga_5
-  # a in b u zvezku, za b nimas narjen
   pkg load image
   #nal5_c
-  #nal5_d
   #nal5_e
   #### DRUGI DEL
   #nal5_bsecond
   #nal5_csecond
+  # init za moment
+  #I1 = imread("regions.png");
+  #I1 = I1(:,:,1)>1;
+  #[I2 , n]=bwlabel(I1); #nova slika stevilo regij
+  #[r,c]=find(I2==1);
+  #rc = [r c];
+  #moment(rc,0,0)
+  #central_moment(rc,0,0)
+  ###konec momenta
+  
   #nal5_dsecond
   #nal5_tic
   f
@@ -25,12 +33,16 @@ imagesc(finished);
 endfunction
 ###
 
-# d) FINISH THIS
-function nal5_d
-test=im2bw(imread("regions.png"),0.5);
-test;
-#mom = sum(u)^2 * sum(v)^2;
-#mom
+# d) 
+function [moment] = moment(R, p, q)
+  moment = sum(R(:,1).^p.* R(:,2).^q)
+endfunction
+function [central_moment] = central_moment(R, p, q)
+  [x , ~] =size(R);
+  avgx = sum(R(:,1))/x;
+  avgy = sum(R(:,2))/x;
+  central_moment= sum((R(:,1)-avgx).^p.* (R(:,2)-avgy).^q);
+
 endfunction
 #e)
 
@@ -123,12 +135,11 @@ subplot(1,2,2);
 imshow(finished_pic);
 endfunction
 function f()
-yimg = rgb2hsv(imread("candy.jpg"));
-
+yimg = rgb2hsv(imread("candy_new.jpg"));
 SE =strel('diamond',2);
 SEblue =strel('diamond',4);
-rgbimg =imread("candy.jpg");
-bimg = rgb2hsv(imread("candy.jpg"));
+rgbimg =imread("candy_new.jpg");
+bimg = rgb2hsv(imread("candy_new.jpg"));
 pragRED = (imdilate(bwareaopen((yimg(:,:,1) >= 3/360  & yimg(:,:,1)<=10/360),5),SEblue));
 centRED = regionprops(pragRED,"centroid");
 pragBLUE = imdilate(bwareaopen(( yimg(:,:,1) >= 67/360  & yimg(:,:,1)<=210/360 & yimg(:,:,2)<=0.2 &yimg(:,:,2)>=0.03),90),SEblue);
@@ -222,13 +233,13 @@ closest_to
 coord_min
 coord_min(1)
 coord_min(2)
-figure(2);
+#figure(2);
 hold on;
 #if you want correct
 #imshow(together_all);
 
 #if you want preatty
-imshow(rgbimg);
+imagesc(rgbimg);
 #where user clicked
 plot(x,y,'or','MarkerSize',40);
 #where closest is

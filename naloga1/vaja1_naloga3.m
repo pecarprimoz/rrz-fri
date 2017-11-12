@@ -4,8 +4,8 @@ function vaja1_naloga3()
  pkg load image
  #a narejen v zvezku
  #nal3_b
- #cur_matrix = double(imread("phone.jpg"));
- #histstretch(cur_matrix);
+ cur_matrix = double(imread("phone.jpg"));
+ histstretch(cur_matrix);
  #nal3_d
 endfunction
  
@@ -49,12 +49,13 @@ endfunction
 #telefon je že v grayscale
 function nal3_d()
  phone_img = imread("phone.jpg");
- figure(2);
- subplot(1,3,1); imshow(phone_img);
+ 
  tobw = im2bw(phone_img);
- bw_hist = tobw(:);
- subplot(1,3,2); phone_hist = hist(phone_img(:),0:256); bar(phone_hist,'r');
- subplot(1,3,3); imshow(tobw);
+   bw_hist = tobw(:);
+ figure(3);
+ subplot(1,3,1); imshow(phone_img);
+ subplot(1,3,2); hist_back=hist(phone_img(:),0:256); bar(hist_back);
+ subplot(1,3,3); imshow(tobw); 
 endfunction
 #Otsujeva metoda e dobra takrat ko imamo na histogramu velike skoke v vredhostih
 #ta jih zna popraviti, torej dela na slikah ki imajo nekje prisotne samo črne barve

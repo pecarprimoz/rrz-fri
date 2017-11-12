@@ -104,7 +104,7 @@ for i=2:12
   im_bw=(im(:,:,1)+im(:,:,2)+im(:,:,3)) / 3.0;
   im_bw=im_bw>150;
   figure(1);
-  subplot(2,4,i);
+  subplot(2,6,i);
   imshow(uint8(im_bw)*255);
 endfor
 endfunction

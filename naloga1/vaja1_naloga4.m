@@ -1,14 +1,14 @@
 ## NALOGA 4
 function vaja1_naloga4()
+pkg load image
   #nal4_a
   #nal4_b
   #nal4_c
   #nal4_d
-  #nal4_f #kle rabs se regije
-  
-  #Irgb= imread('flum.jpg');
-  #I1 = rgb2hsv(imread('flum.jpg'));
-  #immask(Irgb,I1);
+  nal4_f #regije now good
+  Irgb= imread('flum.jpg');
+  I1 = rgb2hsv(imread('flum.jpg'));
+  immask(Irgb,I1);
 endfunction
 
 function nal4_a
@@ -59,6 +59,9 @@ function nal4_b
  blue=blue>200;
  subplot(1,2,2);
  imshow(blue);
+ #ni kvalitetna segmentacija modre barve, je razvidno da vzame tudi bele barve
+ #doseglji bi bolj kvalitetno upragovanje z uporabo HSV modela in bi upragovali
+ #tudi po vrednosti in kontrastu
 endfunction
 ###
 
@@ -102,22 +105,27 @@ endfunction
 #e) narejen ZGORAJ UPORAGOVAL TUDI PO V IN S, 
 # težko je določiti oddtenek zaradi različnih vrednostih v V in S,
 # lažje lahko to določimo z uporagovanjem po še teh kanalih
-
-#f)
+function [moment] = moment(R, p, q)
+   moment = sum(R(:,1).^p.* R(:,2).^q)
+endfunction
 function nal4_f
 yimg = rgb2hsv(imread("trucks.jpg"));
 prag = (yimg(:,:,1)>=32/360 & yimg(:,:,1)<=55/360) & yimg(:,:,2) >= 0.4  & yimg(:,:,3)>=0.4;
 figure(3);
 SE = strel('diamond',4);
-finished_pic = bwlabel(imdilate(bwareaopen(prag,25),SE));
-print_struct_array_contents(true)
-test = regionprops(finished_pic,"centroid");
-#test
-imagesc(finished_pic);
+[finished_pic, n]= bwlabel(imdilate(bwareaopen(prag,25),SE));
+imshow(finished_pic);
+for i=1:n
+  i
+  [r,c]=find(finished_pic==i);
+  rc = [r c];
+  moment(rc,0,0);
+  moment(rc,1,0);
+  moment(rc,0,1);
+endfor
+#neznam momentu dobit
 endfunction
-#idk if region is right
 
-#g 
 function immask(pic_rgb,pic_bw)
 
 Irgb=pic_rgb;
