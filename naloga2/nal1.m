@@ -61,17 +61,17 @@ function nal1()
   #nalogaM();
   
   #naloga n
-  A = rgb2gray(imread('pier.jpg'));
-  nalogaN(A,3);
+  #A = rgb2gray(imread('pier.jpg'));
+  #nalogaN(A,3);
 endfunction
 
 function Ig = simple_convolution(I, g)
 N = (length(g) - 1) / 2;
 Ig = zeros(1, length(I));
 for i = N+1:length(I)-N
-  i_left = max([1, i - N]);
-  i_right = min([length(I), i + N]);
-  Ig(i) = sum(g .* I(i_left:i_right));
+i_left = max([1, i - N]);
+i_right = min([length(I), i + N]);
+Ig(i) = sum(g .* I(i_left:i_right));
 endfor
 endfunction
 
@@ -107,7 +107,7 @@ endfunction
 function [g, x] = gauss(sigma)
 x = -round(3.0*sigma):round(3.0*sigma);
 [Y,X] = meshgrid(x,x);
-g = (1/(sqrt(2*pi*sigma)))*exp(-(X.^2+Y.^2)/(2*sigma^2) );
+g = (1/(sqrt(2*pi)*sigma))*exp(-(x.^2)/(2*sigma^2) );
 g = g / sum(g) ; % normalisation
 endfunction
 
@@ -271,29 +271,36 @@ function nalogaM()
   subplot(2,3,1);
   imagesc(I); colormap gray; title('Impulse');
   subplot(2,3,4);
-  imagesc(conv2(conv2(I,G),G')); colormap gray; title('G Gt');
+  imagesc(conv2(conv2(I,G,'same'),G','same')); colormap gray; title('G Gt');
   subplot(2,3,2);
-  imagesc(conv2(conv2(I,G),D')); colormap gray; title('G Dt');
+  imagesc(conv2(conv2(I,G,'same'),D','same')); colormap gray; title('G Dt');
   subplot(2,3,3);
-  imagesc(conv2(conv2(I,D),G')); colormap gray; title('D Gt');
+  imagesc(conv2(conv2(I,D,'same'),G','same')); colormap gray; title('D Gt');
   subplot(2,3,5);
-  imagesc(conv2(conv2(I,G'),D)); colormap gray; title('Gt D');
+  imagesc(conv2(conv2(I,G','same'),D,'same')); colormap gray; title('Gt D');
   subplot(2,3,6);
-  imagesc(conv2(conv2(I,D'),G)); colormap gray; title('Gt D'); 
+  imagesc(conv2(conv2(I,D','same'),G,'same')); colormap gray; title('Gt D'); 
  #plot([0:1:length(G)-1],G,[0:1:length(D)-1],D)
 endfunction
 
 function nalogaN(I, sigma)
   [G,x1] = gauss(sigma);
   D = gaussdx(sigma)';
-  gradi=conv2(I,G);
-  dif=conv2(I,D);
+  gradi=conv2(I,G,'same');
+  dif=conv2(I,D,'same');
   figure(6);
   subplot(1,3,1);
   imagesc(I); colormap gray;
   subplot(1,3,2);
-  imagesc(conv2(conv2(I,G'),D')); colormap gray;
+  imagesc(conv2(conv2(I,G','same'),D','same')); colormap gray;
   subplot(1,3,3);
-  imagesc(conv2(conv2(I,G),D)); colormap gray;
+  imagesc(conv2(conv2(I,G,'same'),D,'same')); colormap gray;
 
+endfunction
+
+function [Ix, Iy] = imgder(I,sigma)
+  [G, x1] = gauss(sigma);
+  D = gaussdx(sigma)';
+  Ix = conv2(conv2(I,G','same'),D','same');
+  Iy = conv2(conv2(I,G,'same'),D,'same');
 endfunction
