@@ -1,7 +1,7 @@
 #naloga2
 function nal2()
   pkg load image
-  #naloga a
+  #naloga a PRAVILNA
   #A = rgb2gray(imread('museum.jpg'));
   #imgder(A,2.5);
   #[Imag, Idir] = gradient_magnitude(A,2);
@@ -13,7 +13,7 @@ function nal2()
   #subplot(1,3,3);
   #imagesc(Idir); colormap gray;
 
-  #naloga b
+  #naloga b pravilna
   #A = rgb2gray(imread('museum.jpg'));
   #figure(2);
   #x=1
@@ -24,14 +24,15 @@ function nal2()
   #  x++;
   #endfor
   
-  #naloga c
+  #naloga c pravilna
   #nalogaC();
   
-  #dodaten haris
+  #dodaten haris delujeta oba 
   #dela z rectangle, haris z sigmo 3 ?
   #A = rgb2gray(imread('rectangle.png')*255);
-  A = rgb2gray(imread('pier.jpg'));
-  harris_edge(A,0.9);
+  #B = rgb2gray(imread('pier.jpg'));
+  #harris_edge_kvadrat(A,1);
+  #harris_edge_pier(B,3);
   endfunction  
 function derfunc=gaussdx(sigma)
   x = -round(3.0*sigma):round(3.0*sigma);
@@ -99,9 +100,8 @@ function A = nonmaxima_suppression(A, n)
     A(~valid) = 0;
   
 endfunction
-function harris_edge(im,sigma)
+function harris_edge_kvadrat(im,sigma)
   g = gauss(sigma);
-  figure(6);
   [dx,dy] = imgder(im,sigma);
   #Ix = conv2(im,dx,'same');
   #Iy = conv2(im,dy,'same');
@@ -112,11 +112,41 @@ function harris_edge(im,sigma)
   hrs = (Ix2 .* Iy2 - Ixy .^2) ./ (Ix2 + Iy2);
   #[Igrad, Imag] = gradient_magnitude(hrs,sigma);
   #z 3 narlepsi rezultat
-  hrs_fin = nonmaxima_suppression(hrs,3);
+  hrs_fin = nonmaxima_suppression(hrs,1);
+  hrs_fin = (hrs_fin == hrs) & (hrs_fin > 1);
+  [h_x,h_y] = find(hrs_fin);
+  size(h_y)
+  figure(6);
   hold on;
-  hrs_fin = (hrs_fin == hrs) & (hrs_fin > 10);
-  subplot(1,2,1);
-  imshow(hrs_fin);
-  subplot(1,2,2);
-  imshow(im); 
+  imagesc(im);
+  for i=1:size(h_x)
+    plot(h_y(i),h_x(i),'og',15);
+  endfor
+  hold off;
  endfunction
+
+function harris_edge_pier(im,sigma)
+  g = gauss(sigma);
+  [dx,dy] = imgder(im,sigma);
+  #Ix = conv2(im,dx,'same');
+  #Iy = conv2(im,dy,'same');
+  Ix2 = conv2(dx.^2,g,'same');
+  Iy2 = conv2(dy.^2,g,'same');
+  Ixy = conv2(dx.*dy,g,'same');
+  #imshow(corenrs_from_gradient);  
+  hrs = (Ix2 .* Iy2 - Ixy .^2) ./ (Ix2 + Iy2);
+  #[Igrad, Imag] = gradient_magnitude(hrs,sigma);
+  #z 3 narlepsi rezultat
+  hrs_fin = nonmaxima_suppression(hrs,1);
+  hold on;
+  hrs_fin = (hrs_fin == hrs) & (hrs_fin > 1);
+  [h_x,h_y] = find(hrs_fin);
+  size(h_x)
+  size(h_y)
+  hold on;
+  imshow(im);
+  for i=1:size(h_x)
+    plot(h_y(i),h_x(i),'+r',15);
+  endfor
+  hold off;
+endfunction

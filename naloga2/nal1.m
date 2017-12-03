@@ -2,20 +2,20 @@
 function nal1()
   #a narejen v zvezku
   pkg load image
-  #naloga b
+  #naloga b PRAVILNO
   #k = textread('kernel.txt');
   #s = textread('signal.txt');
-  #Ig = simple  _convolutionFigured(s,k);
+  #Ig = simple_convolutionFigured(s,k);
   #odg na vprašanje, uporabljen filter je podoben
   #normaliziran filter za glajenje, sum je 1
   #sum(g)
   
-  #naloga c
+  #naloga c PRAVILNO
   #k = textread('kernel.txt');
   #s = textread('signal.txt');
   #nalogaC(s,k);
   
-  #naloga d
+  #naloga d PRAVILNO
   #[g1 , x1]=gauss(0.5);
   #[g2 , x2]=gauss(1);
   #[g3 , x3]=gauss(2);
@@ -26,41 +26,41 @@ function nal1()
 
   #naloga e narejena v zvezku
   
-  #naloga f
+  #naloga f PRAVILNO
   #nalogaF();
   
-  #naloga g
+  #naloga g PRAVILNO
   #nalogaG();
   
-  #naloga h
+  #naloga h PRAVILNO
   #nalogaH();
   
-  #naloga i
+  #naloga i check code
   #testing simple median
   #k = textread('kernel.txt');
   #s = textread('signal.txt');
   #Ig = simple_median(s,5);
   
-  #naloga j
+  #naloga j PRAVILNO
   #nalogaJ();
   
   #naloga k
-  #testing two d median, seems to be working
+  #testing two d median, seems to be working PRAVILNO
   #A = rgb2gray(imread('lena.png'));
   #twoD_median(A,3);
   
-  #naloga k, dejanska
+  #naloga k, dejanska pravilna
   #nalogaK();
   
-  #naloga l
-  #test = gaussdx(0.5);
+  #naloga l PRAVILNA, VENDAR NE NORMALIZIRANA !!!
+  #test = gaussdx(2);
   #figure;
   #plot([0:1:length(test)-1],test);
   
-  #naloga m
+  #naloga m PRAVILNA
   #nalogaM();
   
-  #naloga n
+  #naloga n pravilna
   #A = rgb2gray(imread('pier.jpg'));
   #nalogaN(A,3);
 endfunction
@@ -107,7 +107,7 @@ endfunction
 function [g, x] = gauss(sigma)
 x = -round(3.0*sigma):round(3.0*sigma);
 [Y,X] = meshgrid(x,x);
-g = (1/(sqrt(2*pi)*sigma))*exp(-(x.^2)/(2*sigma^2) );
+g = (1/(sqrt(2*pi)*sigma))*exp(-(x.^2)/(2*sigma^2));
 g = g / sum(g) ; % normalisation
 endfunction
 
@@ -203,6 +203,8 @@ function Ig = twoD_median(I,W)
   sorted_cols = sort(im_col, 1, 'ascend');
   med_vector = sorted_cols(floor(W*W/2) + 1, :);
   Ig = col2im(med_vector, [W W], size(im_pad), 'sliding');
+  imshow(Ig);
+  
   #I je naša slika
   #W je velikost w*w filtra
   #POČASNA IMPLEMENTACIJA, IZ SLAJDOV
@@ -241,15 +243,15 @@ function nalogaK()
   Ics_b = conv2(Ics,filter_u,'same');
   Ics_b = conv2(Ics,filter_d,'same');
   subplot(2,3,2) ; imshow(uint8(Icg_b)); colormap gray;
-  axis equal; axis tight; title('Filtered') ;
+  axis equal; axis tight; title('Filtered  Gauusan') ;
   subplot(2,3,5) ; imshow(uint8(Ics_b)); colormap gray;
   axis equal; axis tight; title('Filtered');
   median_test = twoD_median(Icg,5);  
   subplot(2,3,3) ; imshow(uint8(median_test)); colormap gray;
-  axis equal; axis tight; title('Filtered');
+  axis equal; axis tight; title('Median Filtered');
   median_test_s = twoD_median(Ics,5);  
   subplot(2,3,6) ; imshow(uint8(median_test_s)); colormap gray;
-  axis equal; axis tight; title('Filtered');
+  axis equal; axis tight; title('Median Filtered');
 endfunction
 
 function derfunc=gaussdx(sigma)
@@ -264,7 +266,7 @@ endfunction
 function nalogaM()
   I = zeros(25,25); 
   I(13,13)=255;
-  sigma = 10.0;
+  sigma = 2.0;
   [G, x1] = gauss(sigma);
   D = gaussdx(sigma);
   figure(1);
