@@ -52,7 +52,7 @@ function nal1()
   #naloga k, dejanska pravilna
   #nalogaK();
   
-  #naloga l PRAVILNA, VENDAR NE NORMALIZIRANA !!!
+  #naloga l PRAVILNA
   #test = gaussdx(2);
   #figure;
   #plot([0:1:length(test)-1],test);
@@ -155,18 +155,21 @@ axis equal; axis tight; title('Filtered');
 endfunction
 
 function nalogaH()
+  #inicializacija filtra
   finm=[0 0 0; 0 2 0; 0 0 0]-(1/9)*[1 1 1; 1 1 1; 1 1 1];
+  #sprememba slike v sivinsko
   A = rgb2gray(imread('museum.jpg'));
+  #prikaz originalne slike
   figure(5);
   subplot(1,2,1);
   imshow(A);
   filtered_image=imfilter(A,finm);
   #3 iteracije
-  for i =(1:2)
+  for i =(1:1)
     filtered_image=imfilter(filtered_image,finm);
   endfor
   subplot(1,2,2);
-  imshow(filtered_image);
+  imshow(uint8(filtered_image));
 endfunction
 function Ig = simple_median(I, W)
   #I je naša slika ki jo filtriramo
@@ -198,10 +201,15 @@ function nalogaJ()
   #bolje se obnese medianin filter
 endfunction
 function Ig = twoD_median(I,W)
+  #doda nule v sliko, za robne vrednosti
   im_pad = padarray(I, [floor(W/2) floor(W/2)]);
+  #sliko razdeli po blokih, podamo sliding window
   im_col = im2col(im_pad, [W W], 'sliding');
+  #sortiramo vrednosti v naraščujočem zaporedju 
   sorted_cols = sort(im_col, 1, 'ascend');
+  #vzamemo srednjo vrednost
   med_vector = sorted_cols(floor(W*W/2) + 1, :);
+  #zapiše vrednosti v novo sliko
   Ig = col2im(med_vector, [W W], size(im_pad), 'sliding');
   imshow(Ig);
   

@@ -5,9 +5,9 @@ function nal3()
 
   #nalogaD pravilno
   #A = edge(rgb2gray(imread('oneline.png')),'Canny');
-  #B = edge(uint8(rgb2gray(imread('rectangle.png')*255)),'Canny');
+  B = edge(uint8(rgb2gray(imread('rectangle.png')*255)),'Canny');
   #nalogaD(A);
-  #nalogaD(B);
+  nalogaD(B);
   
   #nalogaE pravilno
   #nalogaE();
@@ -75,8 +75,8 @@ endfunction
 function nalogaE()
   A = edge(rgb2gray(imread('pier.jpg')),'Canny');
   B = edge(rgb2gray(imread('bricks.jpg')),'Canny');
-  [a_rho, a_theta] = hough_find_lines(A,'threshold',100,'count',50);
-  hough_draw_lines(A,a_rho,a_theta);  
+  #[a_rho, a_theta] = hough_find_lines(A,'threshold',200,'count',20);
+  #hough_draw_lines(A,a_rho,a_theta);  
 
   [b_rho, b_theta] = hough_find_lines(B,'threshold',100,'count',25);
   hough_draw_lines(B,b_rho,b_theta); 
@@ -87,7 +87,7 @@ function nalogaH()
   A = edge(rgb2gray(imread('eclipse.jpg')),'Canny');
   B = edge(rgb2gray(imread('coins.jpg')),'Canny');
   [a_x, a_y, a_r] = hough_find_circles(A,47,'count',32);
-  hough_draw_circles(A,a_x,a_y,a_r);
+  #hough_draw_circles(A,a_x,a_y,a_r);
   [b_x, b_y, b_r] = hough_find_circles(B,87,'count',5);
   hough_draw_circles(B,b_x,b_y,b_r);
   

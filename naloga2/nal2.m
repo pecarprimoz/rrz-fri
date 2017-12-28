@@ -30,9 +30,9 @@ function nal2()
   #dodaten haris delujeta oba 
   #dela z rectangle, haris z sigmo 3 ?
   #A = rgb2gray(imread('rectangle.png')*255);
-  #B = rgb2gray(imread('pier.jpg'));
+  B = rgb2gray(imread('pier.jpg'));
   #harris_edge_kvadrat(A,1);
-  #harris_edge_pier(B,3);
+  harris_edge_pier(B,3);
   endfunction  
 function derfunc=gaussdx(sigma)
   x = -round(3.0*sigma):round(3.0*sigma);
@@ -109,7 +109,7 @@ function harris_edge_kvadrat(im,sigma)
   Iy2 = conv2(dy.^2,g,'same');
   Ixy = conv2(dx.*dy,g,'same');
   #imshow(corenrs_from_gradient);  
-  hrs = (Ix2 .* Iy2 - Ixy .^2) ./ (Ix2 + Iy2);
+  hrs = (Ix2 .* Iy2 - Ixy .^2) - 0.05* (Ix2 + Iy2).^2;
   #[Igrad, Imag] = gradient_magnitude(hrs,sigma);
   #z 3 narlepsi rezultat
   hrs_fin = nonmaxima_suppression(hrs,1);
@@ -119,9 +119,8 @@ function harris_edge_kvadrat(im,sigma)
   figure(6);
   hold on;
   imagesc(im);
-  for i=1:size(h_x)
-    plot(h_y(i),h_x(i),'og',15);
-  endfor
+  plot(h_y,h_x,'og',15);
+
   hold off;
  endfunction
 
@@ -134,19 +133,17 @@ function harris_edge_pier(im,sigma)
   Iy2 = conv2(dy.^2,g,'same');
   Ixy = conv2(dx.*dy,g,'same');
   #imshow(corenrs_from_gradient);  
-  hrs = (Ix2 .* Iy2 - Ixy .^2) ./ (Ix2 + Iy2);
+  hrs = (Ix2 .* Iy2 - Ixy .^2) - 0.05* (Ix2 + Iy2).^2;
   #[Igrad, Imag] = gradient_magnitude(hrs,sigma);
   #z 3 narlepsi rezultat
   hrs_fin = nonmaxima_suppression(hrs,1);
   hold on;
-  hrs_fin = (hrs_fin == hrs) & (hrs_fin > 1);
+  hrs_fin = (hrs_fin == hrs) & (hrs_fin > 7);
   [h_x,h_y] = find(hrs_fin);
   size(h_x)
   size(h_y)
   hold on;
   imshow(im);
-  for i=1:size(h_x)
-    plot(h_y(i),h_x(i),'+r',15);
-  endfor
+    plot(h_y,h_x,'+r',15);
   hold off;
 endfunction
