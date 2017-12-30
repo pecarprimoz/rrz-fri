@@ -108,6 +108,7 @@ function nalogaA()
   world = world_setup(1, 400);
   for i=1:size(pX)
     state = manipulator_solve(manipulator, [pX(i), pY(i), 30]);
+    state(7)=1;
     % Transition to the new manipulator state
     manipulator = manipulator_animate(world, manipulator, state, 10);
   endfor
