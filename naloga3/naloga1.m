@@ -3,7 +3,7 @@ function naloga1()
   %nalogaA1();
   %nalogaA2();
   %nalogaB()
-  nalogaC()
+  %nalogaC()
 endfunction
 
 function [A] = dh_joint(parameters)

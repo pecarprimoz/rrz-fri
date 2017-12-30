@@ -1,5 +1,6 @@
 function naloga2()
-  nalogaA2();
+  %nalogaA1();
+  %nalogaA2();
   %nalogaB();
   %nalogaC(3);
   endfunction
@@ -45,8 +46,8 @@ function nalogaA2()
   cur_best_point=-1;
   cur_best_val=99999;
  
-  for i=1:360
-    [T00, T01, T12, T23] = antro_mod(0.2,0.1,i*180/pi);
+  for i=0:360
+    [T00, T01, T12, T23] = antro_mod(0.2,0.1,i);
     T2 = T23 .* [0,0,0,1];
     T2f = T2(:,4);
     fin = sqrt((T2f(1)-T1(1))^2 + (T2f(2)-T1(2))^2 + (T2f(3)-T1(3))^2);
@@ -64,6 +65,7 @@ function nalogaA2()
   Z = [T1(3),T2(3),T3(3),T4(3)];
   scatter3(X,Y,Z, 2, [0.5 0.5 0.5]);
   endfor
+  
   cur_best_point
   [T00, T01, T12, T23] = antro_mod(0.2,0.1,cur_best_point);
   T1 = T00(:,4);
@@ -84,7 +86,7 @@ function nalogaB()
 
 % Setup world: world structure defines the bounds of the world and
 % points in the world used for navigation
-world = world_setup(1, 200);
+world = world_setup(1, 10);
 
 % We will use two points in this sample.
 world.points = [90,90.5,1;2,2,4]';
@@ -187,6 +189,6 @@ world = world_setup(1, 200);
 world.points = [-200,1,1;1,1,1;200,1,1; 1, 100, 1]';
 setup_antropomorphic;
 manipulator_draw(world, manipulator);
-towerOfHanoi(3,1,2,3,manipulator,world);
+towerOfHanoi(disc,1,2,3,manipulator,world);
   
 endfunction

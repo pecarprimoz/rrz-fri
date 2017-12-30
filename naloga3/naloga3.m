@@ -2,7 +2,7 @@
 function naloga3()
   %nalogaB()
   %nalogaD()
-  nalogaF()
+  %nalogaF()
 endfunction
 
 function nalogaB()

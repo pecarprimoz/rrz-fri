@@ -1,4 +1,4 @@
-camera = camera_create('localhost:8080'); % Create camera handle
+camera = camera_create('10.0.0.105:8080'); % Create camera handle
 image = camera_image(camera); % Retrieve current image
 homography = camera_position(camera); % Retrieve current homoraphy
 
