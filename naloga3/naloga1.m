@@ -3,7 +3,7 @@ function naloga1()
   %nalogaA1();
   %nalogaA2();
   %nalogaB()
-  %nalogaC()
+  nalogaC()
 endfunction
 
 function [A] = dh_joint(parameters)
@@ -92,7 +92,7 @@ function nalogaC()
   I = zeros(360,360);
   for x = 1:360
     for y = 1:360
-      [T00, T01, T12, T23] = antro_mod(y*180/pi,0.1,x*180/pi);
+      [T00, T01, T12, T23] = antro_mod((y*180)/pi,0.1,(x*180)/pi);
       T2 = T23 .* [0,0,0,1];
       T2f = T2(:,4);
       fin = sqrt((T2f(1)-T1(1))^2 + (T2f(2)-T1(2))^2 + (T2f(3)-T1(3))^2);

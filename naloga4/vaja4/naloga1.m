@@ -1,5 +1,5 @@
 function naloga1()
-  %nalogaAB()
+  nalogaAB()
   %nalogaC()
 endfunction
 

@@ -6,7 +6,7 @@ endfunction
 
 
 function nalogaA()
-  camera = camera_create('10.0.0.105:8080'); % Create camera handle
+  camera = camera_create('10.0.0.106:8080'); % Create camera handle
   image = camera_image(camera); % Retrieve current image
   H = camera_position(camera); % Retrieve current homoraphy
   %na koncu dodal spet prvotno koordinato ker drugače mi je falila ena črta
@@ -78,9 +78,9 @@ function nalogaA()
   endfor
   hold off;
   world = world_setup(1, 400);
+  manipulator = manipulator_create('10.0.0.106');
+  manipulator_draw(world, manipulator);
   for i=1:size(pX)
-    manipulator = manipulator_create('10.0.0.105');
-    manipulator_draw(world, manipulator);
     state = manipulator_solve(manipulator, [pX(i), pY(i), 30]);
     % Transition to the new manipulator state
     manipulator = manipulator_animate(world, manipulator, state, 10);
@@ -107,8 +107,6 @@ function nalogaA()
   hold off;
   world = world_setup(1, 400);
   for i=1:size(pX)
-    manipulator = manipulator_create('10.0.0.105');
-    manipulator_draw(world, manipulator);
     state = manipulator_solve(manipulator, [pX(i), pY(i), 30]);
     % Transition to the new manipulator state
     manipulator = manipulator_animate(world, manipulator, state, 10);
