@@ -1,6 +1,6 @@
 function naloga1()
-  nalogaAB()
-  %nalogaC()
+  %nalogaAB()
+  nalogaC()
 endfunction
 
 function nalogaAB()

@@ -86,7 +86,7 @@ function nalogaB()
 
 % Setup world: world structure defines the bounds of the world and
 % points in the world used for navigation
-world = world_setup(1, 10);
+world = world_setup(1, 200);
 
 % We will use two points in this sample.
 world.points = [90,90.5,1;2,2,4]';

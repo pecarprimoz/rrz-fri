@@ -1,8 +1,8 @@
 function naloga2()
   pkg load image
-  %nalogaA();
+  nalogaA();
   %nalogaB();
-  %nalogaC()
+  nalogaC()
 endfunction
 
 
