@@ -1,15 +1,15 @@
 function naloga3()
   pkg load image
-  %nalogaA();
+  nalogaA();
   %nalogaE();
   %nalogaF();
   %skarice();
-  kozarc();
+  %kozarc();
   endfunction
 
 
 function nalogaA()
-  camera = camera_create('roka9.fri1.uni-lj.si'); % Create camera handle
+  camera = camera_create('roka9.local'); % Create camera handle
   
   image = camera_image(camera); % Retrieve current image
   figure(6);
@@ -86,7 +86,7 @@ function nalogaA()
   endfor
   hold off;
   world = world_setup(1, 400);
-  manipulator = manipulator_create('roka9.fri1.uni-lj.si');
+  manipulator = manipulator_create('roka9.local');
   manipulator_draw(world, manipulator);
   for i=1:size(pX)
     state = manipulator_solve(manipulator, [pX(i), pY(i), 60]);
@@ -124,7 +124,7 @@ function nalogaA()
 endfunction
 
 function nalogaE()
-   camera = camera_create('roka9.fri1.uni-lj.si'); % Create camera handle
+   camera = camera_create('roka9.local'); % Create camera handle
   
   image = camera_image(camera); % Retrieve current image
   figure(6);
@@ -202,7 +202,7 @@ function nalogaE()
   endfor
   hold off;
   world = world_setup(1, 400);
-  manipulator = manipulator_create('roka9.fri1.uni-lj.si');
+  manipulator = manipulator_create('roka9.local');
   manipulator_draw(world, manipulator);
   for i=1:size(pX)
     state = manipulator_solve(manipulator, [pX(i), pY(i), 60]);
@@ -218,20 +218,42 @@ function nalogaE()
     state(7)=0.7;
     manipulator = manipulator_animate(world, manipulator, state, 10);
     state = manipulator_solve(manipulator, [pX(i), pY(i), 170]);
-    manipulator = manipulator_animate(world, manipulator, state, 10);
-    state = manipulator_solve(manipulator, [pX(i)-80, pY(i), 170]);
     % Transition to the new manipulator state
+    state(7)=0.7;
     manipulator = manipulator_animate(world, manipulator, state, 10);
     
-    state = manipulator_solve(manipulator, [pX(i)-80, pY(i), 170]);
-    state(7)=0;
+    state = [-0.63000
+   0.89000
+  -0.73000
+  -1.64000
+   0.00000
+  -1.40000
+   0.15000];
     % Transition to the new manipulator state
+    state(7)=0.7;
     manipulator = manipulator_animate(world, manipulator, state, 10);
+    
+    state = [-0.63000
+   0.89000
+  -0.73000
+  -1.64000
+   0.00000
+  -1.40000
+   0.15000];
+    state(7)=0.0;
+    manipulator = manipulator_animate(world, manipulator, state, 10);
+    
+    %state = manipulator_solve(manipulator, [pX(i), pY(i), 170]);
+    
+    %manipulator = manipulator_animate(world, manipulator, state, 10);
+    
+    
+    
   endfor
 endfunction
 
 function nalogaF()
-  camera = camera_create('roka9.fri1.uni-lj.si'); % Create camera handle
+  camera = camera_create('roka9.local'); % Create camera handle
   image = camera_image(camera); % Retrieve current image
   figure(6);
   imshow(image);
@@ -308,7 +330,7 @@ function nalogaF()
   endfor
   hold off;
   world = world_setup(1, 400);
-  manipulator = manipulator_create('roka9.fri1.uni-lj.si');
+  manipulator = manipulator_create('roka9.local');
   manipulator_draw(world, manipulator);
   
   for i=1:size(pX)
